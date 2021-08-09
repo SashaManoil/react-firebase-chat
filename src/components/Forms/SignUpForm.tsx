@@ -1,54 +1,19 @@
 import { Button, Paper, Typography } from "@material-ui/core";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useState, FC } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { signUp } from '../../actions'
+import { signUp } from "../../actions";
 import { SignUp, User } from "../../interfaces";
 import Input from "../Input/Input";
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            "& .MuiTextField-root": {
-                marginTop: theme.spacing(1),
-                marginBottom: theme.spacing(1),
-                width: "100%",
-            },
-            "& .MuiButtonBase-root": {
-                marginTop: theme.spacing(2),
-            },
-        },
-        formPaper: {
-            padding: "20px",
-            maxWidth: "400px",
-        },
-        formTitle: {
-            textAlign: "center",
-        },
-        formButtonContainer: {
-            textAlign: "center",
-        },
-        formNavigation: {
-            textAlign: "center",
-        },
-        loginLink: {
-            marginTop: theme.spacing(2),
-            display: "inline-block",
-            textDecoration: "none",
-            color: "#1976d2",
-            fontSize: "1rem",
-        },
-    })
-);
+import { useStyles } from "./styles";
 
 interface SignUpFormProps {
     title: string;
 }
 
-const SignUpForm: FC<SignUpFormProps> = ({ title }) => {
+const SignUpForm: FC<SignUpFormProps> = (props) => {
+    const { title } = props;
     const classes = useStyles();
-
     const dispatch = useDispatch();
 
     const [state, setState] = useState<SignUp>({
@@ -67,8 +32,13 @@ const SignUpForm: FC<SignUpFormProps> = ({ title }) => {
 
     const validate = () => {
         const temp: SignUp = {
-            name: state.name && state.name.length >= 4 ? "" : "Name should be at least 4 characters.",
-            email: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(state.email) ? "" : "Email is not valid.",
+            name:
+                state.name && state.name.length >= 4
+                    ? ""
+                    : "Name should be at least 4 characters.",
+            email: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(state.email)
+                ? ""
+                : "Email is not valid.",
             password:
                 state.password.length >= 6
                     ? ""
@@ -78,7 +48,7 @@ const SignUpForm: FC<SignUpFormProps> = ({ title }) => {
                     ? ""
                     : "Password do not match.",
         };
-        
+
         setErrors({ ...temp });
 
         return Object.values(temp).every((x) => x === "");
@@ -91,9 +61,9 @@ const SignUpForm: FC<SignUpFormProps> = ({ title }) => {
             const user: User = {
                 name: state.name,
                 email: state.email,
-                password: state.password
-            }
-            dispatch(signUp(user))
+                password: state.password,
+            };
+            dispatch(signUp(user));
         }
     };
     const handleChange =

@@ -1,17 +1,28 @@
-import { FC } from 'react';
-import { TextField } from '@material-ui/core'
+import React, { FC } from "react";
+import { TextField } from "@material-ui/core";
 
-interface Input {
-    label: string,
-    name: string,
-    value: string,
-    type?: string,
-    autoFocus?: boolean,
-    variant?: "standard" | "filled" | "outlined",
-    error?: any,
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+interface InputProps {
+    label: string;
+    name: string;
+    value: string;
+    type?: string;
+    autoFocus?: boolean;
+    variant?: "standard" | "filled" | "outlined";
+    error?: any;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
-const Input: FC<Input> = ({type, name, label, value, autoFocus, error = null, variant, onChange}) => {
+const Input: FC<InputProps> = (props) => {
+    const {
+        type,
+        name,
+        label,
+        value,
+        autoFocus,
+        error = null,
+        variant,
+        onChange,
+    } = props;
+
     return (
         <TextField
             type={type}
@@ -23,9 +34,9 @@ const Input: FC<Input> = ({type, name, label, value, autoFocus, error = null, va
             autoFocus={autoFocus}
             fullWidth
             variant={variant}
-            {...(error && {error: true, helperText: error})}
+            {...(error && { error: true, helperText: error })}
         />
-    )
-}
+    );
+};
 
 export default Input;

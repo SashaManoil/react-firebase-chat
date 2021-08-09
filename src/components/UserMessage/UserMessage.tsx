@@ -1,6 +1,5 @@
-import { Avatar } from "@material-ui/core";
+import React, { FC } from "react";
 import moment from "moment";
-import { FC } from "react";
 import { useStyles } from "./styles";
 
 interface UserMessageProps {
@@ -8,14 +7,11 @@ interface UserMessageProps {
     type: "from" | "to";
     time: Date;
 }
-const UserMessage: FC<UserMessageProps> = ({
-    message,
-    type,
-    time,
-    ...rest
-}) => {
+const UserMessage: FC<UserMessageProps> = (props) => {
+    const { message, type, time, ...rest } = props;
     const classes = useStyles();
     const formattedTime = moment(time).format("hh:mm:ss");
+
     return (
         <>
             <div className={`${classes.messageBox} ${type}`} {...rest}>

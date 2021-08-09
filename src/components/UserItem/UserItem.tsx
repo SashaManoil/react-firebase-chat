@@ -12,7 +12,8 @@ interface UserItemProps {
     user: FirebaseUser;
     onClick: (user: FirebaseUser) => void;
 }
-const UserItem: FC<UserItemProps> = ({ user, onClick, ...rest }) => {
+const UserItem: FC<UserItemProps> = (props) => {
+    const { user, onClick, ...rest } = props;
     return (
         <ListItem button {...rest} onClick={() => onClick(user)}>
             <ListItemAvatar>
@@ -38,7 +39,6 @@ const UserItem: FC<UserItemProps> = ({ user, onClick, ...rest }) => {
                 )}
             </ListItemAvatar>
             <ListItemText primary={user.name} />
-            {user.isOnline ? "online" : "offline"}
         </ListItem>
     );
 };

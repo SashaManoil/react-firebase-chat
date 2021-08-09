@@ -1,53 +1,19 @@
+import React from "react";
 import { Button, Paper, Typography } from "@material-ui/core";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useState, FC } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { signIn } from "../../actions";
-// import { auth } from "../../firebaseSetup";
 import { SignIn } from "../../interfaces";
 import Input from "../Input/Input";
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            "& .MuiTextField-root": {
-                marginTop: theme.spacing(1),
-                marginBottom: theme.spacing(1),
-                width: "100%",
-            },
-            "& .MuiButtonBase-root": {
-                marginTop: theme.spacing(2),
-            },
-        },
-        formPaper: {
-            padding: "20px",
-            maxWidth: "400px",
-        },
-        formTitle: {
-            textAlign: "center",
-        },
-        formButtonContainer: {
-            textAlign: "center",
-        },
-        formNavigation: {
-            textAlign: "center",
-        },
-        loginLink: {
-            marginTop: theme.spacing(2),
-            display: "inline-block",
-            textDecoration: "none",
-            color: "#1976d2",
-            fontSize: "1rem",
-        },
-    })
-);
+import { useStyles } from "./styles";
 
 interface SignInFormProps {
     title: string;
 }
 
-const SignInForm: FC<SignInFormProps> = ({ title }) => {
+const SignInForm: FC<SignInFormProps> = (props) => {
+    const { title } = props;
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -61,32 +27,25 @@ const SignInForm: FC<SignInFormProps> = ({ title }) => {
         password: "",
     });
 
-    // const serverErrors = (error: any) => {
-    //     const temp = {
-    //         email: error.code !== "auth/user-not-found" ? "" : error.message,
-    //         password: error.code !== "auth/wrong-password" ? "" : error.message,
-    //     }
-
-    //     setErrors({...temp});
-    // };
-    
     const validate = () => {
         const temp = {
-            email: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(state.email) ? "" : "Email is not valid.",
+            email: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(state.email)
+                ? ""
+                : "Email is not valid.",
             password:
                 state.password.length >= 6
                     ? ""
                     : "Password should be at least 6 characters.",
-        }
+        };
 
-        setErrors({...temp});
-        return Object.values(temp).every(x => x === "");
+        setErrors({ ...temp });
+        return Object.values(temp).every((x) => x === "");
     };
-    
+
     const handleSubmit = async (ev: React.SyntheticEvent) => {
         ev.preventDefault();
 
-        if(validate()) {
+        if (validate()) {
             dispatch(signIn(state.email, state.password));
         }
     };

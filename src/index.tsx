@@ -1,9 +1,8 @@
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-// import AuthProvider from "./context/AuthProvider";
-import { Provider } from 'react-redux';
-import store from './store';
+import { Provider } from "react-redux";
+import store from "./store";
 
 ReactDOM.render(
     <Provider store={store}>
